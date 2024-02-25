@@ -86,25 +86,6 @@ def find_head(token_list: list[str]):
         # print("b")
         raise NameError("Invalid input")
 
-    # This block is to avoid situations like these:
-    # ['(', '2', '+', '4', '*', '2', ')'] - We want to remove parentheses at the start and end
-    # if they belong to the same pair
-    # if we don't do that then we get:
-    # ['(', '2', '+', '4'] ['2', ')'] pairs like these and they are harder to parse
-    paren_count = 0
-    if token_list[0] == "(" and token_list[-1] == ")":
-        surrounding_paren = True
-        for i in range(1, len(token_list) - 1):
-            if token_list[i] == "(":
-                paren_count += 1
-            elif token_list[i] == ")":
-                paren_count -= 1
-                if paren_count < 0:
-                    surrounding_paren = False
-
-        if surrounding_paren is True:
-            return find_head(token_list[1:-1])
-
     paren_count = 0
     mul_occured = False
     mul_index = 0
@@ -131,10 +112,12 @@ def find_head(token_list: list[str]):
             token_list[mul_index + 1 :],
         )
 
+    return find_head(token_list[1:-1])
+
 
 def main():
     try:
-        token_list = tokenize("")
+        token_list = tokenize("(5+(6-2)*2)")
     except NameError:
         print("Invalid input")
         return
