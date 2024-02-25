@@ -42,10 +42,10 @@ class Node:
         self.right = right
 
     def syntax_tree(self):
-        if len(self.sym) == 1:
+        if len(self.sym) == 1:  # if length is one then this node is a leaf
             self.sym = self.sym[0]
-        elif len(self.sym) == 0:
-            self.sym = "0"
+        elif len(self.sym) == 0:  # if length is zero, then this node is empty
+            self.sym = "0"  # this will only occur when we have a negative number, like this (-5)
         else:
             try:
                 head, left, right = find_head(self.sym)
